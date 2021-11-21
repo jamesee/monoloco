@@ -87,7 +87,9 @@ def webcam(args):
     predictor = openpifpaf.Predictor(checkpoint=args.checkpoint)
 
     # Start recording
-    cam = cv2.VideoCapture(args.camera)
+    #[James-debug]
+    cam = cv2.VideoCapture(args.images[0])
+    # cam = cv2.VideoCapture(args.camera)
     visualizer_mono = None
 
     while True:
@@ -134,17 +136,22 @@ def webcam(args):
 
         if 'social_distance' in args.activities:
             dic_out = net.social_distance(dic_out, args)
-            # [james]
-            # print(f"social dist: {dic_out.social_distance}")
-            # print(f"xyz: {dic_out.xyz_pred}")
         if 'raise_hand' in args.activities:
             dic_out = net.raising_hand(dic_out, keypoints)
         if visualizer_mono is None:  # it is, at the beginning
             visualizer_mono = Visualizer(kk, args)(pil_image)  # create it with the first image
             visualizer_mono.send(None)
 
+        # [james]
+        # print(f"[James] dic_out : {dic_out}")
+        #TODO: put the request.post here 
+        print(f"xyz_pred: {dic_out['xyz_pred']}, social dist: {dic_out['social_distance']}")
+        # print(f"xyz: {dic_out.xyz_pred}")
         LOG.debug(dic_out)
-        visualizer_mono.send((pil_image, dic_out, pifpaf_outs))
+        # [James] commented out visualizer_mo
+        # visualizer_mono.send((pil_image, dic_out, pifpaf_outs))
+        #TODO: [james] to comment out cv2.imshow on production
+        cv2.imshow("Input Video - for debug purpose", frame)
 
         end = time.time()
         LOG.info("run-time: {:.2f} ms".format((end-start)*1000))

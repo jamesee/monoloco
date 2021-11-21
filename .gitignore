@@ -12,3 +12,5 @@ kitti-eval/build
 kitti-eval/cmake-build-debug
 figures/
 visual_tests/
+*.mp4
+venv*

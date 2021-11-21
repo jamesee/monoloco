@@ -133,6 +133,7 @@ def cli():
                              action='store_true')
 
     args = parser.parse_args()
+    print(f"[James-DEBUG] args: {args}")
     return args
 
 
@@ -140,7 +141,10 @@ def main():
     args = cli()
     if args.command == 'predict':
         if args.webcam:
-            from .visuals.webcam import webcam
+            #[James]
+            # from .visuals.webcam import webcam
+            # webcam(args)
+            from .visuals.webcam_lauretta import webcam
             webcam(args)
         else:
             from .predict import predict

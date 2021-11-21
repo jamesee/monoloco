@@ -236,6 +236,8 @@ def predict(args):
                         dic_out, boxes, keypoints, kk, dic_gt)
                     if 'social_distance' in args.activities:
                         dic_out = net.social_distance(dic_out, args)
+                        # [Debug-James]
+                        print(f"[James] dic_out : {dic_out}")
                     if 'raise_hand' in args.activities:
                         dic_out = net.raising_hand(dic_out, keypoints)
 
